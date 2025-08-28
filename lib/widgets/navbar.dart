@@ -24,13 +24,7 @@ class CustomBottomNavBar extends StatelessWidget {
       builder: (context, provider, child) {
         return Container(
           height: 80,
-          decoration: BoxDecoration(
-            color: const Color(0xFF131313),
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(24),
-              topRight: Radius.circular(24),
-            ),
-          ),
+          decoration: BoxDecoration(color: const Color(0xFF131313)),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
@@ -84,12 +78,7 @@ class CustomBottomNavBar extends StatelessWidget {
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        decoration: BoxDecoration(
-          color: isSelected
-              ? AppColors.primaryColor.withOpacity(0.15)
-              : Colors.transparent,
-          borderRadius: BorderRadius.circular(16),
-        ),
+
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [

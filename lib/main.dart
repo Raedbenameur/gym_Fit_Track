@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             routes: Routes.routes,
-            initialRoute: '/',
+            initialRoute: '/home',
             locale: languageProvider.locale,
             supportedLocales: const [Locale('en'), Locale('fr')],
             localizationsDelegates: const [

@@ -44,7 +44,7 @@ class DailyMotivation extends StatelessWidget {
             '"The only bad workout is the one that didn\'t happen. Keep pushing your limits!"',
             style: Fonts.text.copyWith(
               color: Colors.white,
-              fontSize: 16,
+              fontSize: 14,
               fontStyle: FontStyle.italic,
               height: 1.4,
             ),

@@ -23,7 +23,7 @@ class CustomBottomNavBar extends StatelessWidget {
     return Consumer<LanguageProvider>(
       builder: (context, provider, child) {
         return Container(
-          height: 80,
+          height: 65,
           decoration: BoxDecoration(color: const Color(0xFF131313)),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -75,6 +75,9 @@ class CustomBottomNavBar extends StatelessWidget {
   }) {
     return GestureDetector(
       onTap: () => onTap(index),
+      behavior:
+          HitTestBehavior.translucent, // This makes the entire area tappable
+
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -87,7 +90,7 @@ class CustomBottomNavBar extends StatelessWidget {
               child: Icon(
                 icon,
                 color: isSelected ? AppColors.primaryColor : Colors.grey[400],
-                size: isSelected ? 28 : 24,
+                size: isSelected ? 24 : 20,
               ),
             ),
             const SizedBox(height: 4),
@@ -95,7 +98,7 @@ class CustomBottomNavBar extends StatelessWidget {
               duration: const Duration(milliseconds: 200),
               style: Fonts.text.copyWith(
                 color: isSelected ? AppColors.primaryColor : Colors.grey[400],
-                fontSize: isSelected ? 12 : 10,
+                fontSize: isSelected ? 10 : 9,
                 fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
               ),
               child: Text(label),

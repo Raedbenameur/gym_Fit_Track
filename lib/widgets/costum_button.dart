@@ -10,6 +10,8 @@ class CustomButton extends StatefulWidget {
   final double? height;
   final double? fontSize;
   final IconData? icon;
+  final Color? borderColor; // Add border color
+  final double? borderWidth; // Add border width
 
   const CustomButton({
     super.key,
@@ -21,6 +23,8 @@ class CustomButton extends StatefulWidget {
     this.height,
     this.fontSize,
     this.icon,
+    this.borderColor, // Add this parameter
+    this.borderWidth, // Add this parameter
   });
 
   @override
@@ -64,11 +68,20 @@ class _CustomButtonState extends State<CustomButton>
             scale: _scaleAnimation.value,
             child: Container(
               width: widget.width ?? double.infinity,
-              height: widget.height ?? 56,
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+
+              padding: EdgeInsets.symmetric(
+                horizontal: 24,
+                vertical: widget.height ?? 16,
+              ),
               decoration: BoxDecoration(
                 color: widget.color,
                 borderRadius: BorderRadius.circular(16),
+                border: widget.borderColor != null
+                    ? Border.all(
+                        color: widget.borderColor!,
+                        width: widget.borderWidth ?? 1.0,
+                      )
+                    : null, // Add border support
                 boxShadow: [
                   BoxShadow(
                     color: widget.color.withOpacity(0.3),

@@ -43,7 +43,7 @@ class WorkoutCard extends StatelessWidget {
               'CHEST & ARMS',
               style: Fonts.title.copyWith(
                 color: Colors.white,
-                fontSize: 24,
+                fontSize: 20,
                 fontWeight: FontWeight.bold,
                 letterSpacing: 1.2,
               ),
@@ -68,7 +68,7 @@ class WorkoutCard extends StatelessWidget {
                   '45 min workout',
                   style: Fonts.text.copyWith(
                     color: Colors.white,
-                    fontSize: 14,
+                    fontSize: 12,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -85,8 +85,8 @@ class WorkoutCard extends StatelessWidget {
                 elevation: 4,
                 shadowColor: AppColors.primaryColor.withOpacity(0.3),
                 padding: const EdgeInsets.symmetric(
-                  horizontal: 32,
-                  vertical: 14,
+                  horizontal: 24,
+                  vertical: 12,
                 ),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30),
@@ -97,9 +97,9 @@ class WorkoutCard extends StatelessWidget {
                 children: [
                   Text(
                     'Start Workout',
-                    style: Fonts.text.copyWith(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
+                    style: Fonts.title.copyWith(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
                       color: Colors.black,
                     ),
                   ),

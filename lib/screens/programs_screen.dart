@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:gym/widgets/app_bar_button.dart';
+import 'package:gym/widgets/programs/program_card.dart';
 import '../core/colors.dart';
 import '../core/fonts.dart';
 
@@ -86,32 +88,115 @@ class _ProgramsScreenState extends State<ProgramsScreen> {
     }).toList();
   }
 
+  void _showAddProgramDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          backgroundColor: Colors.transparent,
+          child: Container(
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: const Color(0xFF2A2A2A),
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'Add New Program',
+                  style: Fonts.title.copyWith(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  'This feature will allow you to create custom workout programs',
+                  style: Fonts.text.copyWith(
+                    color: Colors.grey[400],
+                    fontSize: 14,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 20),
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: Text(
+                          'Cancel',
+                          style: TextStyle(color: Colors.grey[400]),
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                          // Navigate to add program screen
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.primaryColor,
+                          foregroundColor: Colors.black,
+                        ),
+                        child: const Text('Create'),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 29, 28, 28),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Header
-              Text(
-                'Workout Programs',
-                style: Fonts.title.copyWith(
-                  color: Colors.white,
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                'Find the perfect program for your goals',
-                style: Fonts.text.copyWith(
-                  color: Colors.grey[400],
-                  fontSize: 16,
-                ),
+              // Header with Add Button
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Workout Programs',
+                          style: Fonts.title.copyWith(
+                            color: Colors.white,
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          'Create and manage your workout plans',
+                          style: Fonts.subtitle.copyWith(
+                            color: Colors.grey[400],
+                            fontSize: 14,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  // Add Program Button
+                  AppBarButton(
+                    icon: const Icon(Icons.add, color: Colors.black, size: 28),
+                    onPressed: _showAddProgramDialog,
+                  ),
+                ],
               ),
               const SizedBox(height: 20),
 
@@ -142,7 +227,7 @@ class _ProgramsScreenState extends State<ProgramsScreen> {
 
               // Filter Chips
               SizedBox(
-                height: 40,
+                height: 36,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemCount: filters.length,
@@ -180,6 +265,7 @@ class _ProgramsScreenState extends State<ProgramsScreen> {
                             style: Fonts.text.copyWith(
                               color: isSelected ? Colors.black : Colors.white,
                               fontWeight: FontWeight.w600,
+                              fontSize: 12,
                             ),
                           ),
                         ),
@@ -225,7 +311,7 @@ class _ProgramsScreenState extends State<ProgramsScreen> {
                         itemCount: filteredPrograms.length,
                         itemBuilder: (context, index) {
                           final program = filteredPrograms[index];
-                          return _buildProgramCard(program);
+                          return ProgramCard(program: program);
                         },
                       ),
               ),
@@ -234,242 +320,6 @@ class _ProgramsScreenState extends State<ProgramsScreen> {
         ),
       ),
     );
-  }
-
-  Widget _buildProgramCard(Map<String, dynamic> program) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 16),
-      decoration: BoxDecoration(
-        color: const Color(0xFF2A2A2A),
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.2),
-            spreadRadius: 0,
-            blurRadius: 8,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Program Image
-          Container(
-            height: 150,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(16),
-                topRight: Radius.circular(16),
-              ),
-              gradient: LinearGradient(
-                colors: [
-                  AppColors.primaryColor.withOpacity(0.8),
-                  AppColors.primaryColor.withOpacity(0.4),
-                ],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-            ),
-            child: Stack(
-              children: [
-                // Level Badge
-                Positioned(
-                  top: 12,
-                  right: 12,
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 8,
-                      vertical: 4,
-                    ),
-                    decoration: BoxDecoration(
-                      color: _getLevelColor(program['level']),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Text(
-                      program['level'],
-                      style: Fonts.text.copyWith(
-                        color: Colors.white,
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-                // Progress indicator for started programs
-                if (program['isStarted'])
-                  Positioned(
-                    top: 12,
-                    left: 12,
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 8,
-                        vertical: 4,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.green.withOpacity(0.9),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Text(
-                        'In Progress',
-                        style: Fonts.text.copyWith(
-                          color: Colors.white,
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
-                // Play button
-                Center(
-                  child: Container(
-                    width: 60,
-                    height: 60,
-                    decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.9),
-                      shape: BoxShape.circle,
-                    ),
-                    child: const Icon(
-                      Icons.play_arrow,
-                      color: Colors.black,
-                      size: 30,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-
-          // Program Details
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Program Name
-                Text(
-                  program['name'],
-                  style: Fonts.title.copyWith(
-                    color: Colors.white,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 8),
-
-                // Goal Tagline
-                Text(
-                  program['goal'],
-                  style: Fonts.text.copyWith(
-                    color: AppColors.primaryColor,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                const SizedBox(height: 12),
-
-                // Duration & Level Info
-                Row(
-                  children: [
-                    Icon(Icons.access_time, color: Colors.grey[400], size: 16),
-                    const SizedBox(width: 4),
-                    Text(
-                      program['duration'],
-                      style: Fonts.text.copyWith(
-                        color: Colors.grey[400],
-                        fontSize: 14,
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 16),
-
-                // Progress Bar (if started)
-                if (program['isStarted']) ...[
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Progress',
-                        style: Fonts.text.copyWith(
-                          color: Colors.white,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      Text(
-                        '${(program['progress'] * 100).toInt()}%',
-                        style: Fonts.text.copyWith(
-                          color: AppColors.primaryColor,
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 8),
-                  LinearProgressIndicator(
-                    value: program['progress'],
-                    backgroundColor: Colors.grey[600],
-                    valueColor: AlwaysStoppedAnimation<Color>(
-                      AppColors.primaryColor,
-                    ),
-                    minHeight: 6,
-                  ),
-                  const SizedBox(height: 16),
-                ],
-
-                // Action Button
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      // Navigate to program details
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: program['isStarted']
-                          ? AppColors.primaryColor
-                          : Colors.transparent,
-                      foregroundColor: program['isStarted']
-                          ? Colors.black
-                          : AppColors.primaryColor,
-                      side: program['isStarted']
-                          ? null
-                          : BorderSide(color: AppColors.primaryColor),
-                      padding: const EdgeInsets.symmetric(vertical: 12),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(25),
-                      ),
-                    ),
-                    child: Text(
-                      program['isStarted'] ? 'Continue' : 'Start Program',
-                      style: Fonts.text.copyWith(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Color _getLevelColor(String level) {
-    switch (level) {
-      case 'Beginner':
-        return Colors.green;
-      case 'Intermediate':
-        return Colors.orange;
-      case 'Advanced':
-        return Colors.red;
-      default:
-        return Colors.grey;
-    }
   }
 
   @override

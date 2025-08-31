@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:gym/screens/programs/new_program.dart';
+import 'package:gym/screens/programs/program_days.dart';
 import 'package:gym/widgets/app_bar_button.dart';
 import 'package:gym/widgets/programs/program_card.dart';
-import '../core/colors.dart';
-import '../core/fonts.dart';
+import 'package:gym/widgets/search_field.dart';
+import '../../core/colors.dart';
+import '../../core/fonts.dart';
+import '../../routes.dart';
 
 class ProgramsScreen extends StatefulWidget {
   const ProgramsScreen({super.key});
@@ -88,73 +92,6 @@ class _ProgramsScreenState extends State<ProgramsScreen> {
     }).toList();
   }
 
-  void _showAddProgramDialog() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return Dialog(
-          backgroundColor: Colors.transparent,
-          child: Container(
-            padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(
-              color: const Color(0xFF2A2A2A),
-              borderRadius: BorderRadius.circular(16),
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  'Add New Program',
-                  style: Fonts.title.copyWith(
-                    color: Colors.white,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 16),
-                Text(
-                  'This feature will allow you to create custom workout programs',
-                  style: Fonts.text.copyWith(
-                    color: Colors.grey[400],
-                    fontSize: 14,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 20),
-                Row(
-                  children: [
-                    Expanded(
-                      child: TextButton(
-                        onPressed: () => Navigator.pop(context),
-                        child: Text(
-                          'Cancel',
-                          style: TextStyle(color: Colors.grey[400]),
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                          // Navigate to add program screen
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.primaryColor,
-                          foregroundColor: Colors.black,
-                        ),
-                        child: const Text('Create'),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        );
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -185,7 +122,7 @@ class _ProgramsScreenState extends State<ProgramsScreen> {
                           'Create and manage your workout plans',
                           style: Fonts.subtitle.copyWith(
                             color: Colors.grey[400],
-                            fontSize: 14,
+                            fontSize: 12,
                           ),
                         ),
                       ],
@@ -194,34 +131,28 @@ class _ProgramsScreenState extends State<ProgramsScreen> {
                   // Add Program Button
                   AppBarButton(
                     icon: const Icon(Icons.add, color: Colors.black, size: 28),
-                    onPressed: _showAddProgramDialog,
+                    onPressed: () async {
+                      if (context.mounted) {
+                        await Routes.slideFromRight(
+                          context,
+                          const ProgramDaysScreen(),
+                        );
+                      }
+                    },
                   ),
                 ],
               ),
               const SizedBox(height: 20),
 
               // Search Bar
-              Container(
-                decoration: BoxDecoration(
-                  color: const Color(0xFF2A2A2A),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: TextField(
-                  controller: searchController,
-                  style: Fonts.text.copyWith(color: Colors.white),
-                  decoration: InputDecoration(
-                    hintText: 'Search programs...',
-                    hintStyle: Fonts.text.copyWith(color: Colors.grey[500]),
-                    prefixIcon: Icon(Icons.search, color: Colors.grey[500]),
-                    border: InputBorder.none,
-                    contentPadding: const EdgeInsets.all(16),
-                  ),
-                  onChanged: (value) {
-                    setState(() {
-                      searchQuery = value;
-                    });
-                  },
-                ),
+              SearchField(
+                controller: searchController,
+                hintText: "Search programs...",
+                onChanged: (value) {
+                  setState(() {
+                    searchQuery = value;
+                  });
+                },
               ),
               const SizedBox(height: 20),
 

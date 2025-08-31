@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:gym/routes.dart';
+import 'package:gym/screens/settings_screen.dart';
 import 'package:gym/widgets/app_bar_button.dart';
-import 'package:gym/widgets/calendar.dart';
-import 'package:gym/widgets/daily_motivation.dart';
-import 'package:gym/widgets/workout_card.dart';
-import 'package:lottie/lottie.dart';
+import 'package:gym/widgets/home/calendar.dart';
+import 'package:gym/widgets/home/daily_motivation.dart';
+import 'package:gym/widgets/home/quick_action.dart';
+import 'package:gym/widgets/home/stat_item.dart';
+import 'package:gym/widgets/home/workout_card.dart';
+
 import '../core/colors.dart';
 import '../core/fonts.dart';
 
@@ -87,60 +91,6 @@ class _HomeScreenState extends State<HomeScreen>
           ),
         );
       },
-    );
-  }
-
-  Widget _buildStatItem(String value, String label, IconData icon) {
-    return Column(
-      children: [
-        Icon(icon, color: AppColors.primaryColor, size: 28),
-        const SizedBox(height: 8),
-        Text(
-          value,
-          style: Fonts.title.copyWith(
-            color: Colors.white,
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        Text(
-          label,
-          style: Fonts.text.copyWith(color: Colors.grey[400], fontSize: 12),
-          textAlign: TextAlign.center,
-        ),
-      ],
-    );
-  }
-
-  Widget _buildQuickAction(String title, IconData icon, VoidCallback onTap) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: const Color(0xFF2A2A2A),
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(
-            color: AppColors.primaryColor.withOpacity(0.3),
-            width: 1,
-          ),
-        ),
-        child: Column(
-          children: [
-            Icon(icon, color: AppColors.primaryColor, size: 24),
-            const SizedBox(height: 8),
-            Text(
-              title,
-              style: Fonts.text.copyWith(
-                color: Colors.white,
-                fontSize: 12,
-                fontWeight: FontWeight.w500,
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ],
-        ),
-      ),
     );
   }
 
@@ -228,7 +178,7 @@ class _HomeScreenState extends State<HomeScreen>
                         'Ready for today\'s workout?',
                         style: Fonts.text.copyWith(
                           color: Colors.grey[400],
-                          fontSize: 14,
+                          fontSize: 12,
                         ),
                       ),
                     ],
@@ -239,8 +189,13 @@ class _HomeScreenState extends State<HomeScreen>
                       color: Colors.black,
                       size: 28,
                     ),
-                    onPressed: () {
-                      // Handle button tap
+                    onPressed: () async {
+                      if (context.mounted) {
+                        await Routes.slideFromRight(
+                          context,
+                          const SettingsScreen(),
+                        );
+                      }
                     },
                   ),
                 ],
@@ -306,11 +261,6 @@ class _HomeScreenState extends State<HomeScreen>
                       ),
                     ),
                   ),
-                  Lottie.asset(
-                    'assets/animations/workout.json',
-                    width: 40,
-                    height: 50,
-                  ),
                 ],
               ),
               SizedBox(height: 20),
@@ -324,17 +274,23 @@ class _HomeScreenState extends State<HomeScreen>
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    _buildStatItem(
-                      '21',
-                      'Days\nStreak',
-                      Icons.local_fire_department,
+                    StatItem(
+                      value: '156',
+                      label: 'Total\nWorkouts',
+                      icon: Icons.fitness_center,
                     ),
-                    _buildStatItem(
-                      '156',
-                      'Total\nWorkouts',
-                      Icons.fitness_center,
+                    StatItem(
+                      icon: Icons.local_fire_department, // Fire icon
+                      value: "107", // Days streak value
+                      label: "Days\nStreak",
+                      delay: const Duration(milliseconds: 400),
+                      isFireIcon: true, // Enable fire animation
                     ),
-                    _buildStatItem('78', 'Hours\nTrained', Icons.access_time),
+                    StatItem(
+                      value: '178',
+                      label: 'Hours\nTrained',
+                      icon: Icons.access_time_outlined,
+                    ),
                   ],
                 ),
               ),
@@ -344,23 +300,28 @@ class _HomeScreenState extends State<HomeScreen>
               Row(
                 children: [
                   Expanded(
-                    child: _buildQuickAction(
-                      'Start\nWorkout',
-                      Icons.play_arrow,
-                      () {},
+                    child: QuickAction(
+                      title: 'Start\nWorkout',
+                      icon: Icons.play_arrow,
+                      onTap: () {},
+                      isStartWorkout: true,
                     ),
                   ),
                   const SizedBox(width: 12),
                   Expanded(
-                    child: _buildQuickAction(
-                      'View\nProgress',
-                      Icons.insights,
-                      () {},
+                    child: QuickAction(
+                      title: 'View\nProgress',
+                      icon: Icons.insights,
+                      onTap: () {},
                     ),
                   ),
                   const SizedBox(width: 12),
                   Expanded(
-                    child: _buildQuickAction('Set\nGoals', Icons.flag, () {}),
+                    child: QuickAction(
+                      title: 'Set\nGoals',
+                      icon: Icons.flag,
+                      onTap: () {},
+                    ),
                   ),
                 ],
               ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../core/colors.dart';
-import '../core/fonts.dart';
+import '../../core/colors.dart';
+import '../../core/fonts.dart';
 
 class WorkoutCalendar extends StatefulWidget {
   const WorkoutCalendar({super.key});

@@ -200,6 +200,7 @@ class _GoalsScreenState extends State<GoalsScreen>
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
+
                       children: [
                         Text(
                           'Goals',
@@ -209,12 +210,12 @@ class _GoalsScreenState extends State<GoalsScreen>
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        const SizedBox(height: 4),
+
                         Text(
                           'Track your fitness journey',
                           style: Fonts.text.copyWith(
                             color: Colors.grey[400],
-                            fontSize: 14,
+                            fontSize: 12,
                           ),
                         ),
                       ],
@@ -264,9 +265,8 @@ class _GoalsScreenState extends State<GoalsScreen>
               const SizedBox(height: 24),
 
               // Tab Bar
-              // Tab Bar
               Container(
-                height: 45,
+                height: 40,
                 padding: const EdgeInsets.all(4),
                 decoration: BoxDecoration(
                   color: const Color(0xFF1A1A1A),
@@ -284,37 +284,26 @@ class _GoalsScreenState extends State<GoalsScreen>
                 child: TabBar(
                   controller: _tabController,
                   indicator: BoxDecoration(
-                    color: AppColors
-                        .primaryColor, // Fixed: This is the indicator background color
+                    color: AppColors.primaryColor,
                     borderRadius: BorderRadius.circular(22),
-                    boxShadow: [
-                      BoxShadow(
-                        color: AppColors.primaryColor.withOpacity(0.4),
-                        spreadRadius: 0,
-                        blurRadius: 2,
-                        offset: const Offset(0, 1),
-                      ),
-                    ],
                   ),
-                  indicatorSize: TabBarIndicatorSize.tab, // Add this line
+                  indicatorSize: TabBarIndicatorSize.tab,
                   indicatorPadding: EdgeInsets.zero,
-                  labelColor: Colors
-                      .black, // Text color when selected (on primary color)
-                  unselectedLabelColor:
-                      Colors.grey[400], // Text color when not selected
-                  labelStyle: Fonts.text.copyWith(
+                  labelColor: Colors.black,
+                  unselectedLabelColor: Colors.grey[400],
+                  labelStyle: Fonts.subtitle.copyWith(
                     fontWeight: FontWeight.w700,
-                    fontSize: 14,
+                    fontSize: 13,
                     letterSpacing: 0.5,
                   ),
-                  unselectedLabelStyle: Fonts.text.copyWith(
+                  unselectedLabelStyle: Fonts.subtitle.copyWith(
                     fontWeight: FontWeight.w500,
-                    fontSize: 14,
+                    fontSize: 12,
                     letterSpacing: 0.3,
                   ),
                   dividerColor: Colors.transparent,
                   splashFactory: NoSplash.splashFactory,
-                  overlayColor: MaterialStateProperty.all(Colors.transparent),
+                  overlayColor: WidgetStateProperty.all(Colors.transparent),
                   tabs: const [
                     Tab(child: Text('Active', style: TextStyle(inherit: true))),
                     Tab(
@@ -434,18 +423,6 @@ class _GoalsScreenState extends State<GoalsScreen>
       decoration: BoxDecoration(
         color: const Color(0xFF2A2A2A),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(
-          color: AppColors.primaryColor.withOpacity(0.2),
-          width: 1,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            spreadRadius: 0,
-            blurRadius: 8,
-            offset: const Offset(0, 4),
-          ),
-        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -455,14 +432,11 @@ class _GoalsScreenState extends State<GoalsScreen>
             children: [
               Container(
                 padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  color: AppColors.primaryColor.withOpacity(0.2),
-                  borderRadius: BorderRadius.circular(12),
-                ),
+
                 child: Icon(
                   goal['icon'],
                   color: AppColors.primaryColor,
-                  size: 20,
+                  size: 18,
                 ),
               ),
               const SizedBox(width: 16),
@@ -474,14 +448,14 @@ class _GoalsScreenState extends State<GoalsScreen>
                       goal['title'],
                       style: Fonts.title.copyWith(
                         color: Colors.white,
-                        fontSize: 16,
+                        fontSize: 14,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     const SizedBox(height: 4),
                     Text(
                       goal['type'],
-                      style: Fonts.text.copyWith(
+                      style: Fonts.subtitle.copyWith(
                         color: AppColors.primaryColor,
                         fontSize: 12,
                         fontWeight: FontWeight.w500,
@@ -595,7 +569,7 @@ class _GoalsScreenState extends State<GoalsScreen>
                       goal['current'],
                       style: Fonts.text.copyWith(
                         color: Colors.white,
-                        fontSize: 14,
+                        fontSize: 12,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
@@ -618,7 +592,7 @@ class _GoalsScreenState extends State<GoalsScreen>
                       goal['target'],
                       style: Fonts.text.copyWith(
                         color: AppColors.primaryColor,
-                        fontSize: 14,
+                        fontSize: 12,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -633,91 +607,128 @@ class _GoalsScreenState extends State<GoalsScreen>
   }
 
   Widget _buildCompletedGoalCard(Map<String, dynamic> goal) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 16),
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: const Color(0xFF2A2A2A),
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.green.withOpacity(0.3), width: 1),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            spreadRadius: 0,
-            blurRadius: 8,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: Row(
-        children: [
-          // Trophy Icon
-          Container(
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: Colors.green.withOpacity(0.2),
-              borderRadius: BorderRadius.circular(16),
-              border: Border.all(
-                color: Colors.green.withOpacity(0.5),
-                width: 1,
-              ),
-            ),
-            child: const Icon(
-              Icons.emoji_events,
-              color: Colors.green,
-              size: 28,
-            ),
-          ),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  goal['title'],
-                  style: Fonts.title.copyWith(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
+    return TweenAnimationBuilder<double>(
+      duration: const Duration(milliseconds: 600),
+      tween: Tween<double>(begin: 0.0, end: 1.0),
+      builder: (context, value, child) {
+        return Transform.scale(
+          scale: 0.8 + (0.2 * value), // Scale from 0.8 to 1.0
+          child: Opacity(
+            opacity: value, // Fade in
+            child: Transform.translate(
+              offset: Offset(0, 30 * (1 - value)), // Slide up from bottom
+              child: Container(
+                margin: const EdgeInsets.only(bottom: 16),
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  color: const Color(0xFF2A2A2A),
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(
+                    color: Colors.green.withOpacity(0.3),
+                    width: 1,
                   ),
                 ),
-                const SizedBox(height: 6),
-                Text(
-                  'Target: ${goal['target']}',
-                  style: Fonts.text.copyWith(
-                    color: Colors.grey[400],
-                    fontSize: 14,
-                  ),
-                ),
-                const SizedBox(height: 6),
-                Row(
+                child: Row(
                   children: [
-                    Icon(Icons.calendar_today, color: Colors.green, size: 12),
-                    const SizedBox(width: 4),
-                    Text(
-                      'Completed: ${_formatDate(goal['completedDate'])}',
-                      style: Fonts.text.copyWith(
-                        color: Colors.green,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w500,
+                    // Trophy Icon with rotation animation
+                    TweenAnimationBuilder<double>(
+                      duration: Duration(
+                        milliseconds: 800 + (value * 200).toInt(),
                       ),
+                      tween: Tween<double>(begin: 0.0, end: 1.0),
+                      builder: (context, rotationValue, child) {
+                        return Transform.rotate(
+                          angle:
+                              (1 - rotationValue) * 0.5, // Rotate from 0.5 to 0
+                          child: Container(
+                            padding: const EdgeInsets.all(16),
+                            child: Icon(
+                              Icons.emoji_events,
+                              color: Color.lerp(
+                                Colors.grey,
+                                const Color.fromARGB(255, 16, 158, 20),
+                                rotationValue,
+                              ), // Color transition
+                              size: 28,
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            goal['title'],
+                            style: Fonts.title.copyWith(
+                              color: Colors.white,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(height: 6),
+                          Text(
+                            'Target: ${goal['target']}',
+                            style: Fonts.subtitle.copyWith(
+                              color: Colors.grey[400],
+                              fontSize: 12,
+                            ),
+                          ),
+                          const SizedBox(height: 6),
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.calendar_today,
+                                color: Colors.green,
+                                size: 12,
+                              ),
+                              const SizedBox(width: 4),
+                              Text(
+                                'Completed: ${_formatDate(goal['completedDate'])}',
+                                style: Fonts.text.copyWith(
+                                  color: Colors.green,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    // Checkmark with scale animation
+                    TweenAnimationBuilder<double>(
+                      duration: Duration(
+                        milliseconds: 400 + (value * 300).toInt(),
+                      ),
+                      tween: Tween<double>(begin: 0.0, end: 1.0),
+                      builder: (context, checkValue, child) {
+                        return Transform.scale(
+                          scale: checkValue,
+                          child: Container(
+                            padding: const EdgeInsets.all(8),
+                            child: Icon(
+                              Icons.check,
+                              color: Color.lerp(
+                                const Color.fromARGB(255, 158, 158, 158),
+                                const Color.fromARGB(255, 3, 255, 146),
+                                checkValue,
+                              ),
+                              size: 20,
+                            ),
+                          ),
+                        );
+                      },
                     ),
                   ],
                 ),
-              ],
+              ),
             ),
           ),
-          // Checkmark
-          Container(
-            padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              color: Colors.green,
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: const Icon(Icons.check, color: Colors.white, size: 16),
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 

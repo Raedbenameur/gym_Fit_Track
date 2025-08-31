@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:gym/screens/goals_screen.dart';
 import 'package:gym/screens/home_screen.dart';
-import 'package:gym/screens/programs_screen.dart';
+import 'package:gym/screens/programs/programs_screen.dart';
 import 'package:gym/screens/progress_screen.dart';
 import 'package:gym/widgets/navbar.dart';
 

@@ -161,7 +161,7 @@ class ProgramCard extends StatelessWidget {
 
                 // Action Button
                 CustomButton(
-                  fontSize: 16,
+                  fontSize: 14,
                   height: 12,
                   text: program['isStarted'] ? 'Continue' : 'Start Program',
                   color: program['isStarted']

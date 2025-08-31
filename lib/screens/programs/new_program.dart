@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:gym/core/colors.dart';
 import 'package:gym/core/fonts.dart';
+import 'package:gym/screens/programs/program_days.dart';
 import 'package:gym/widgets/app_bar.dart' as custom_app_bar;
 import 'package:gym/widgets/costum_button.dart';
 import 'package:gym/widgets/programs/custom_field.dart';
+
+import '../../routes.dart';
 
 class NewProgramScreen extends StatefulWidget {
   const NewProgramScreen({super.key});
@@ -53,7 +56,7 @@ class _NewProgramScreenState extends State<NewProgramScreen> {
       backgroundColor: const Color.fromARGB(255, 29, 28, 28),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           child: Form(
             key: _formKey,
             child: Column(
@@ -271,8 +274,13 @@ class _NewProgramScreenState extends State<NewProgramScreen> {
 
                   textColor: Colors.black,
 
-                  onPressed: () {
-                    // Navigate to program details
+                  onPressed: () async {
+                    if (context.mounted) {
+                      await Routes.slideFromRight(
+                        context,
+                        const ProgramDaysScreen(),
+                      );
+                    }
                   },
                 ),
               ],

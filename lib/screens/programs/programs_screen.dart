@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gym/screens/programs/new_program.dart';
-import 'package:gym/screens/programs/program_days.dart';
 import 'package:gym/widgets/app_bar_button.dart';
 import 'package:gym/widgets/programs/program_card.dart';
 import 'package:gym/widgets/search_field.dart';
@@ -135,7 +134,7 @@ class _ProgramsScreenState extends State<ProgramsScreen> {
                       if (context.mounted) {
                         await Routes.slideFromRight(
                           context,
-                          const ProgramDaysScreen(),
+                          const NewProgramScreen(),
                         );
                       }
                     },

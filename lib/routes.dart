@@ -41,3 +41,33 @@ class Routes {
     );
   }
 }
+
+class FadePageRoute<T> extends PageRouteBuilder<T> {
+  final Widget child;
+
+  FadePageRoute({required this.child})
+    : super(
+        transitionDuration: const Duration(milliseconds: 400),
+        reverseTransitionDuration: const Duration(milliseconds: 400),
+        pageBuilder: (context, animation, secondaryAnimation) => child,
+      );
+
+  @override
+  Widget buildTransitions(
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+    Widget child,
+  ) {
+    var curvedAnimation = CurvedAnimation(
+      parent: animation,
+      curve: Curves.easeInOut,
+    );
+
+    return FadeTransition(opacity: curvedAnimation, child: child);
+  }
+}
+
+Future<T?> fadeToPage<T>(BuildContext context, Widget page) {
+  return Navigator.push<T>(context, FadePageRoute<T>(child: page));
+}

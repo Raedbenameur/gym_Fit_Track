@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:gym/core/colors.dart';
 import 'package:gym/core/fonts.dart';
 import 'package:gym/widgets/app_bar.dart' as custom_app_bar;
+import 'package:gym/widgets/costum_button.dart';
+import 'package:gym/widgets/programs/custom_field.dart';
+import 'package:smooth_list_view/smooth_list_view.dart';
+import 'program_day_exercises.dart';
+import '/routes.dart' as custom_route;
 
 class ProgramDaysScreen extends StatefulWidget {
   final Map<String, dynamic>? programData;
@@ -51,6 +56,7 @@ class _ProgramDaysScreenState extends State<ProgramDaysScreen> {
         'workoutType': 'Rest Day',
         'customWorkout': '',
         'isCustom': false,
+        'exercises': <Map<String, dynamic>>[], // Add exercises list
       };
     }
   }
@@ -102,6 +108,7 @@ class _ProgramDaysScreenState extends State<ProgramDaysScreen> {
             'day': entry.key,
             'workoutType': entry.value['workoutType'],
             'customWorkout': entry.value['customWorkout'],
+            'exercises': entry.value['exercises'],
           },
         )
         .toList();
@@ -148,7 +155,7 @@ class _ProgramDaysScreenState extends State<ProgramDaysScreen> {
       backgroundColor: const Color.fromARGB(255, 29, 28, 28),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -164,7 +171,7 @@ class _ProgramDaysScreenState extends State<ProgramDaysScreen> {
                 'Training Days per Week',
                 style: Fonts.text.copyWith(
                   color: AppColors.primaryColor,
-                  fontSize: 18,
+                  fontSize: 14,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -179,8 +186,8 @@ class _ProgramDaysScreenState extends State<ProgramDaysScreen> {
                   return GestureDetector(
                     onTap: () => _updateDaysCount(days),
                     child: Container(
-                      width: 40,
-                      height: 40,
+                      width: 35,
+                      height: 35,
                       decoration: BoxDecoration(
                         color: isSelected
                             ? AppColors.primaryColor
@@ -196,10 +203,10 @@ class _ProgramDaysScreenState extends State<ProgramDaysScreen> {
                       child: Center(
                         child: Text(
                           '$days',
-                          style: Fonts.text.copyWith(
+                          style: Fonts.title.copyWith(
                             color: isSelected ? Colors.black : Colors.white,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
                       ),
@@ -214,7 +221,7 @@ class _ProgramDaysScreenState extends State<ProgramDaysScreen> {
                 'Weekly Schedule',
                 style: Fonts.text.copyWith(
                   color: AppColors.primaryColor,
-                  fontSize: 18,
+                  fontSize: 14,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -222,7 +229,8 @@ class _ProgramDaysScreenState extends State<ProgramDaysScreen> {
 
               // Days List
               Expanded(
-                child: ListView.builder(
+                child: SmoothListView.builder(
+                  duration: const Duration(milliseconds: 200),
                   itemCount: _daysOfWeek.length,
                   itemBuilder: (context, index) {
                     final day = _daysOfWeek[index];
@@ -241,7 +249,12 @@ class _ProgramDaysScreenState extends State<ProgramDaysScreen> {
                         borderRadius: BorderRadius.circular(16),
                         border: Border.all(
                           color: isActive
-                              ? AppColors.primaryColor.withOpacity(0.5)
+                              ? const Color.fromARGB(
+                                  197,
+                                  30,
+                                  255,
+                                  146,
+                                ).withOpacity(0.2)
                               : Colors.grey[800]!,
                           width: 1,
                         ),
@@ -255,11 +268,16 @@ class _ProgramDaysScreenState extends State<ProgramDaysScreen> {
                               GestureDetector(
                                 onTap: () => _toggleDayActive(day),
                                 child: Container(
-                                  width: 50,
-                                  height: 28,
+                                  width: 45,
+                                  height: 26,
                                   decoration: BoxDecoration(
                                     color: isActive
-                                        ? AppColors.primaryColor
+                                        ? const Color.fromARGB(
+                                            197,
+                                            30,
+                                            255,
+                                            146,
+                                          )
                                         : Colors.grey[700],
                                     borderRadius: BorderRadius.circular(14),
                                   ),
@@ -269,8 +287,8 @@ class _ProgramDaysScreenState extends State<ProgramDaysScreen> {
                                         ? Alignment.centerRight
                                         : Alignment.centerLeft,
                                     child: Container(
-                                      width: 24,
-                                      height: 24,
+                                      width: 22,
+                                      height: 22,
                                       margin: const EdgeInsets.all(2),
                                       decoration: BoxDecoration(
                                         color: Colors.white,
@@ -286,11 +304,11 @@ class _ProgramDaysScreenState extends State<ProgramDaysScreen> {
                               Expanded(
                                 child: Text(
                                   day,
-                                  style: Fonts.text.copyWith(
+                                  style: Fonts.subtitle.copyWith(
                                     color: isActive
                                         ? Colors.white
                                         : Colors.grey[500],
-                                    fontSize: 16,
+                                    fontSize: 14,
                                     fontWeight: FontWeight.w600,
                                   ),
                                 ),
@@ -304,7 +322,12 @@ class _ProgramDaysScreenState extends State<ProgramDaysScreen> {
                                 ),
                                 decoration: BoxDecoration(
                                   color: isActive
-                                      ? AppColors.primaryColor.withOpacity(0.2)
+                                      ? const Color.fromARGB(
+                                          197,
+                                          30,
+                                          255,
+                                          146,
+                                        ).withOpacity(0.2)
                                       : Colors.grey[800],
                                   borderRadius: BorderRadius.circular(12),
                                 ),
@@ -312,7 +335,12 @@ class _ProgramDaysScreenState extends State<ProgramDaysScreen> {
                                   workoutType,
                                   style: Fonts.text.copyWith(
                                     color: isActive
-                                        ? AppColors.primaryColor
+                                        ? const Color.fromARGB(
+                                            197,
+                                            30,
+                                            255,
+                                            146,
+                                          )
                                         : Colors.grey[500],
                                     fontSize: 12,
                                     fontWeight: FontWeight.w500,
@@ -364,27 +392,125 @@ class _ProgramDaysScreenState extends State<ProgramDaysScreen> {
                             // Custom Workout Input (if custom selected)
                             if (isCustom) ...[
                               const SizedBox(height: 12),
-                              Container(
-                                decoration: BoxDecoration(
-                                  color: const Color(0xFF3A3A3A),
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                child: TextField(
-                                  style: Fonts.text.copyWith(
-                                    color: Colors.white,
-                                  ),
-                                  decoration: InputDecoration(
-                                    hintText: 'Enter custom workout...',
-                                    hintStyle: Fonts.text.copyWith(
-                                      color: Colors.grey[500],
+                              CustomField(
+                                controller: TextEditingController(),
+                                labelText: '',
+                                onChanged: (value) {
+                                  _weekSchedule[day]!['customWorkout'] = value;
+                                },
+                                hintText: "Enter custom workout",
+                              ),
+                            ],
+
+                            // Add exercises button (if active and not rest day)
+                            if (workoutType != 'Rest Day') ...[
+                              const SizedBox(height: 12),
+                              GestureDetector(
+                                onTap: () {
+                                  // Navigate to exercises screen with slide up animation
+                                  custom_route
+                                      .fadeToPage(
+                                        context,
+                                        ProgramDayExercisesScreen(
+                                          day: day,
+                                          workoutType: workoutType,
+                                          exercises:
+                                              _weekSchedule[day]!['exercises'] ??
+                                              [],
+                                        ),
+                                      )
+                                      .then((exercises) {
+                                        if (exercises != null) {
+                                          setState(() {
+                                            _weekSchedule[day]!['exercises'] =
+                                                exercises;
+                                          });
+                                        }
+                                      });
+                                },
+                                child: Container(
+                                  padding: const EdgeInsets.all(12),
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xFF3A3A3A),
+                                    borderRadius: BorderRadius.circular(12),
+                                    border: Border.all(
+                                      color: const Color.fromARGB(
+                                        197,
+                                        30,
+                                        255,
+                                        146,
+                                      ).withOpacity(0.3),
+                                      width: 1,
                                     ),
-                                    border: InputBorder.none,
-                                    contentPadding: const EdgeInsets.all(12),
                                   ),
-                                  onChanged: (value) {
-                                    _weekSchedule[day]!['customWorkout'] =
-                                        value;
-                                  },
+                                  child: Row(
+                                    children: [
+                                      Icon(
+                                        Icons.fitness_center,
+                                        color: const Color.fromARGB(
+                                          197,
+                                          30,
+                                          255,
+                                          146,
+                                        ),
+                                        size: 20,
+                                      ),
+                                      const SizedBox(width: 12),
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              'Add Exercises',
+                                              style: Fonts.text.copyWith(
+                                                color: Colors.white,
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                            ),
+                                            const SizedBox(height: 2),
+                                            Text(
+                                              (_weekSchedule[day]!['exercises']
+                                                              as List?)
+                                                          ?.isEmpty ??
+                                                      true
+                                                  ? 'No exercises added'
+                                                  : '${(_weekSchedule[day]!['exercises'] as List).length} exercises',
+                                              style: Fonts.text.copyWith(
+                                                color: Colors.grey[400],
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Container(
+                                        padding: const EdgeInsets.all(4),
+                                        decoration: BoxDecoration(
+                                          color: const Color.fromARGB(
+                                            197,
+                                            30,
+                                            255,
+                                            146,
+                                          ).withOpacity(0.2),
+                                          borderRadius: BorderRadius.circular(
+                                            6,
+                                          ),
+                                        ),
+                                        child: Icon(
+                                          Icons.arrow_forward_ios,
+                                          color: const Color.fromARGB(
+                                            197,
+                                            30,
+                                            255,
+                                            146,
+                                          ),
+                                          size: 14,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ],
@@ -397,29 +523,16 @@ class _ProgramDaysScreenState extends State<ProgramDaysScreen> {
               ),
 
               // Save Button
-              Container(
-                width: double.infinity,
-                height: 52,
-                margin: const EdgeInsets.only(top: 16),
-                child: ElevatedButton(
-                  onPressed: _saveSchedule,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.primaryColor,
-                    foregroundColor: Colors.black,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    elevation: 0,
-                  ),
-                  child: Text(
-                    'Save Schedule',
-                    style: Fonts.text.copyWith(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
+              const SizedBox(height: 10),
+              CustomButton(
+                fontSize: 14,
+                height: 12,
+                text: 'Save Schedule',
+                color: AppColors.primaryColor,
+                textColor: Colors.black,
+                onPressed: () {
+                  _saveSchedule();
+                },
               ),
             ],
           ),

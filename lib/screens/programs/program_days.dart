@@ -18,7 +18,7 @@ class ProgramDaysScreen extends StatefulWidget {
 }
 
 class _ProgramDaysScreenState extends State<ProgramDaysScreen> {
-  int _selectedDays = 3;
+  int _selectedDays = 0;
   final Map<String, Map<String, dynamic>> _weekSchedule = {};
 
   final List<String> _daysOfWeek = [

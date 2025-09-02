@@ -87,12 +87,20 @@ class _NewProgramScreenState extends State<NewProgramScreen> {
               child: Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: isSelected
-                      ? Colors.transparent
-                      : const Color(0xFF2A2A2A),
+                  gradient: isSelected
+                      ? LinearGradient(
+                          colors: [
+                            difficulty['color1'].withOpacity(0.5),
+                            difficulty['color1'].withOpacity(0.8),
+                          ],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        )
+                      : null,
                   borderRadius: BorderRadius.circular(12),
+
                   border: Border.all(
-                    color: isSelected ? difficulty['color'] : Colors.grey[700]!,
+                    color: isSelected ? Colors.transparent : Colors.grey[700]!,
                     width: 1,
                   ),
                 ),
@@ -103,10 +111,8 @@ class _NewProgramScreenState extends State<NewProgramScreen> {
                       child: Text(
                         difficulty['name'],
                         style: Fonts.subtitle.copyWith(
-                          color: isSelected
-                              ? difficulty['color']
-                              : Colors.white,
-                          fontSize: 13,
+                          color: Colors.white,
+                          fontSize: 12,
                           fontWeight: isSelected
                               ? FontWeight.w700
                               : FontWeight.w600,
@@ -117,7 +123,7 @@ class _NewProgramScreenState extends State<NewProgramScreen> {
                     ),
                     if (isSelected) ...[
                       const SizedBox(width: 4),
-                      Icon(Icons.done, color: difficulty['color'], size: 18),
+                      Icon(Icons.done, color: Colors.white, size: 18),
                     ],
                   ],
                 ),
@@ -147,6 +153,7 @@ class _NewProgramScreenState extends State<NewProgramScreen> {
           style: Fonts.text.copyWith(color: Colors.grey[400], fontSize: 14),
         ),
         const SizedBox(height: 12),
+
         GridView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
@@ -159,24 +166,40 @@ class _NewProgramScreenState extends State<NewProgramScreen> {
           itemCount: _periodOptions.length,
           itemBuilder: (context, index) {
             final period = _periodOptions[index];
-            final isSelected = _selectedPeriod == period['value'];
+
+            // Check if this is a custom period or matches the current selection
+            final bool isCustomSelected =
+                period['value'] == 'custom' &&
+                _selectedPeriod != null &&
+                _selectedPeriod!.contains('weeks') &&
+                !_periodOptions.any((p) => p['value'] == _selectedPeriod);
+
+            final bool isSelected =
+                _selectedPeriod == period['value'] || isCustomSelected;
 
             return GestureDetector(
               onTap: () {
-                setState(() {
-                  _selectedPeriod = period['value'];
-                });
-
                 if (period['value'] == 'custom') {
                   _showCustomPeriodDialog();
+                } else {
+                  setState(() {
+                    _selectedPeriod = period['value'];
+                  });
                 }
               },
               child: Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: isSelected
-                      ? Color(0xFF00B7C4).withOpacity(0.2)
-                      : const Color(0xFF2A2A2A),
+                  gradient: isSelected
+                      ? LinearGradient(
+                          colors: [
+                            Color(0xFFFDDD48).withOpacity(0.2),
+                            Color(0xFFFDDD48).withOpacity(0.5),
+                          ],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        )
+                      : null,
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(
                     color: isSelected ? Colors.transparent : Colors.grey[700]!,
@@ -185,48 +208,54 @@ class _NewProgramScreenState extends State<NewProgramScreen> {
                 ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min, // Added to prevent overflow
                   children: [
                     Row(
                       children: [
                         Icon(
                           period['icon'],
-                          color: isSelected
-                              ? Color(0xFFFDDD48)
-                              : Colors.grey[400],
+                          color: isSelected ? Colors.white : Colors.grey[400],
                           size: 20,
                         ),
                         const SizedBox(width: 8),
                         Expanded(
                           child: Text(
-                            period['name'],
-                            style: Fonts.text.copyWith(
-                              color: isSelected
-                                  ? Color(0xFFFDDD48)
-                                  : Colors.white,
+                            // Show custom duration if selected, otherwise show default name
+                            isCustomSelected
+                                ? _selectedPeriod!
+                                : period['name'],
+                            style: Fonts.subtitle.copyWith(
+                              color: Colors.white,
                               fontSize: 12,
                               fontWeight: isSelected
-                                  ? FontWeight.w600
+                                  ? FontWeight.w700
                                   : FontWeight.w500,
                             ),
                             overflow: TextOverflow.ellipsis,
+                            maxLines: 1, // Added to prevent text overflow
                           ),
                         ),
                         if (isSelected)
-                          Icon(
-                            Icons.check_circle,
-                            color: Color(0xFFFDDD48),
-                            size: 16,
-                          ),
+                          Icon(Icons.done, color: Colors.white, size: 16),
                       ],
                     ),
                     const SizedBox(height: 4),
-                    Text(
-                      period['description'],
-                      style: Fonts.text.copyWith(
-                        color: Colors.grey[500],
-                        fontSize: 10,
+                    Flexible(
+                      // Changed from regular Text to Flexible
+                      child: Text(
+                        // Show appropriate description
+                        isCustomSelected
+                            ? 'Custom duration'
+                            : period['description'],
+                        style: Fonts.text.copyWith(
+                          color: isSelected ? Colors.white : Colors.grey[400],
+                          fontSize: 10,
+                        ),
+                        textAlign: TextAlign.center,
+                        overflow:
+                            TextOverflow.ellipsis, // Added overflow handling
+                        maxLines: 2, // Allow max 2 lines for description
                       ),
-                      textAlign: TextAlign.center,
                     ),
                   ],
                 ),
@@ -262,7 +291,7 @@ class _NewProgramScreenState extends State<NewProgramScreen> {
           children: [
             CustomField(
               controller: customPeriodController,
-              hintText: "Enter weeks (e.g., 20)",
+              hintText: "Enter weeks",
               labelText: 'Duration in weeks',
               keyboardType: TextInputType.number,
             ),
@@ -283,11 +312,16 @@ class _NewProgramScreenState extends State<NewProgramScreen> {
           ),
           TextButton(
             onPressed: () {
-              if (customPeriodController.text.trim().isNotEmpty) {
-                setState(() {
-                  _selectedPeriod = customPeriodController.text.trim();
-                });
-                Navigator.pop(context);
+              final inputText = customPeriodController.text.trim();
+              if (inputText.isNotEmpty) {
+                final weeks = int.tryParse(inputText);
+                if (weeks != null && weeks >= 1 && weeks <= 52) {
+                  setState(() {
+                    // Format as "X weeks" for consistency
+                    _selectedPeriod = '$weeks weeks';
+                  });
+                  Navigator.pop(context);
+                }
               }
             },
             child: Text(
@@ -553,7 +587,11 @@ class _NewProgramScreenState extends State<NewProgramScreen> {
                       : Colors.grey[600]!,
                   icon: Icons.arrow_forward,
                   textColor: Colors.black,
-                  onPressed: _isFormValid,
+                  onPressed: () async {
+                    await Routes.slideFromRight(context, ProgramDaysScreen());
+                  },
+
+                  /* _isFormValid*/
                 ),
               ],
             ),

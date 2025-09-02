@@ -179,7 +179,7 @@ class _AddExerciseState extends State<AddExercise> {
             };
 
             // Use the main widget's setState instead of the StatefulBuilder's setState
-            this.setState(() {
+            setState(() {
               _exercises.add(newExercise);
             });
 

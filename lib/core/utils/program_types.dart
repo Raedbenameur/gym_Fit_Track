@@ -40,10 +40,26 @@ class ProgramTypes {
   ];
 
   final List<Map<String, dynamic>> _difficultyLevels = [
-    {'name': 'Beginner', 'color': const Color(0xFF05A660)},
-    {'name': 'Intermediate', 'color': Color(0xFFFF8800)},
-    {'name': 'Advanced', 'color': Color(0xFFE63535)},
-    {'name': 'Expert', 'color': Color(0xFFB00020)},
+    {
+      'name': 'Beginner',
+      'color1': Color(0xFF05A660),
+      'color2': Color(0xFF00C851),
+    },
+    {
+      'name': 'Intermediate',
+      'color1': Color(0xFFFF8800),
+      'color2': Color(0xFFFFBB33),
+    },
+    {
+      'name': 'Advanced',
+      'color1': Color(0xFFE63535),
+      'color2': Color(0xFFFF4444),
+    },
+    {
+      'name': 'Expert',
+      'color1': Color(0xFFB00020),
+      'color2': Color(0xFFCC0000),
+    },
   ];
 
   final List<Map<String, dynamic>> _periodOptions = [

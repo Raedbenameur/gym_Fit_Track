@@ -4,6 +4,7 @@ import 'package:gym/core/fonts.dart';
 import 'package:gym/widgets/app_bar.dart' as custom_app_bar;
 import 'package:gym/widgets/costum_button.dart';
 import 'package:gym/widgets/programs/custom_field.dart';
+import 'package:gym/widgets/programs/time.dart';
 import 'package:smooth_list_view/smooth_list_view.dart';
 import 'program_day_exercises.dart';
 import '/routes.dart' as custom_route;
@@ -189,13 +190,25 @@ class _ProgramDaysScreenState extends State<ProgramDaysScreen> {
                       width: 35,
                       height: 35,
                       decoration: BoxDecoration(
-                        color: isSelected
-                            ? AppColors.primaryColor
-                            : const Color(0xFF2A2A2A),
+                        gradient: isSelected
+                            ? LinearGradient(
+                                colors: [
+                                  const Color.fromARGB(
+                                    255,
+                                    255,
+                                    225,
+                                    92,
+                                  ).withOpacity(0.8),
+                                  const Color(0xFFFDDD48).withOpacity(1),
+                                ],
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                              )
+                            : null,
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(
                           color: isSelected
-                              ? AppColors.primaryColor
+                              ? Colors.transparent
                               : Colors.grey[700]!,
                           width: 1,
                         ),
@@ -403,8 +416,20 @@ class _ProgramDaysScreenState extends State<ProgramDaysScreen> {
                             ],
 
                             // Add exercises button (if active and not rest day)
+                            SizedBox(height: 20),
+
+                            TimeSelector(
+                              title: 'Workout Time',
+                              subtitle: 'When do you usually workout?',
+                              onTimeSelected: (String selectedTime) {
+                                setState(() {
+                                  var _selectedWorkoutTime = selectedTime;
+                                });
+                              },
+                            ),
+                            SizedBox(height: 12),
+
                             if (workoutType != 'Rest Day') ...[
-                              const SizedBox(height: 12),
                               GestureDetector(
                                 onTap: () {
                                   // Navigate to exercises screen with slide up animation

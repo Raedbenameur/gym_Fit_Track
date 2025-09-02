@@ -41,6 +41,8 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   smooth_list_view: ^2.0.2
+  permission_handler: ^12.0.1
+  image_picker: ^1.2.0
   
 
 dev_dependencies:

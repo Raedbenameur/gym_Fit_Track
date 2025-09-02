@@ -1,10 +1,14 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:gym/core/colors.dart';
 import 'package:gym/core/fonts.dart';
 import 'package:gym/screens/programs/program_days.dart';
 import 'package:gym/widgets/app_bar.dart' as custom_app_bar;
 import 'package:gym/widgets/costum_button.dart';
+import 'package:gym/widgets/image.dart';
 import 'package:gym/widgets/programs/custom_field.dart';
+import '../../core/utils/program_types.dart';
 
 import '../../routes.dart';
 
@@ -24,23 +28,14 @@ class _NewProgramScreenState extends State<NewProgramScreen> {
 
   String? _selectedType;
   bool _isCustomType = false;
+  String? _selectedDifficulty;
+  String? _selectedPeriod;
+  final ProgramTypes _programTypesProvider = ProgramTypes();
+  List<Map<String, dynamic>> get _difficultyLevels =>
+      _programTypesProvider.difficultyLevels;
 
-  final List<Map<String, dynamic>> _programTypes = [
-    {'name': 'Muscle Gain', 'icon': Icons.fitness_center, 'color': Colors.blue},
-    {
-      'name': 'Weight Loss',
-      'icon': Icons.local_fire_department,
-      'color': Colors.orange,
-    },
-    {'name': 'Strength', 'icon': Icons.trending_up, 'color': Colors.green},
-    {'name': 'Endurance', 'icon': Icons.directions_run, 'color': Colors.purple},
-    {
-      'name': 'Flexibility',
-      'icon': Icons.self_improvement,
-      'color': Colors.pink,
-    },
-    {'name': 'General Fitness', 'icon': Icons.favorite, 'color': Colors.red},
-  ];
+  List<Map<String, dynamic>> get _periodOptions =>
+      _programTypesProvider.periodOptions;
 
   @override
   void dispose() {
@@ -48,6 +43,269 @@ class _NewProgramScreenState extends State<NewProgramScreen> {
     _descriptionController.dispose();
     _customTypeController.dispose();
     super.dispose();
+  }
+
+  Widget _buildDifficultySection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Difficulty Level',
+          style: Fonts.text.copyWith(
+            color: AppColors.primaryColor,
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        const SizedBox(height: 8),
+        Text(
+          'Select your fitness level:',
+          style: Fonts.text.copyWith(color: Colors.grey[400], fontSize: 14),
+        ),
+        const SizedBox(height: 12),
+        GridView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            crossAxisSpacing: 12,
+            mainAxisSpacing: 12,
+            childAspectRatio: 3,
+          ),
+          itemCount: _difficultyLevels.length,
+          itemBuilder: (context, index) {
+            final difficulty = _difficultyLevels[index];
+            final isSelected = _selectedDifficulty == difficulty['name'];
+
+            return GestureDetector(
+              onTap: () {
+                setState(() {
+                  _selectedDifficulty = difficulty['name'];
+                });
+              },
+
+              child: Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: isSelected
+                      ? Colors.transparent
+                      : const Color(0xFF2A2A2A),
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(
+                    color: isSelected ? difficulty['color'] : Colors.grey[700]!,
+                    width: 1,
+                  ),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: Text(
+                        difficulty['name'],
+                        style: Fonts.subtitle.copyWith(
+                          color: isSelected
+                              ? difficulty['color']
+                              : Colors.white,
+                          fontSize: 13,
+                          fontWeight: isSelected
+                              ? FontWeight.w700
+                              : FontWeight.w600,
+                        ),
+                        textAlign: TextAlign.center,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                    if (isSelected) ...[
+                      const SizedBox(width: 4),
+                      Icon(Icons.done, color: difficulty['color'], size: 18),
+                    ],
+                  ],
+                ),
+              ),
+            );
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget _buildPeriodSection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Program Duration',
+          style: Fonts.text.copyWith(
+            color: AppColors.primaryColor,
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        const SizedBox(height: 8),
+        Text(
+          'How long will this program run?',
+          style: Fonts.text.copyWith(color: Colors.grey[400], fontSize: 14),
+        ),
+        const SizedBox(height: 12),
+        GridView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            crossAxisSpacing: 12,
+            mainAxisSpacing: 12,
+            childAspectRatio: 2.5,
+          ),
+          itemCount: _periodOptions.length,
+          itemBuilder: (context, index) {
+            final period = _periodOptions[index];
+            final isSelected = _selectedPeriod == period['value'];
+
+            return GestureDetector(
+              onTap: () {
+                setState(() {
+                  _selectedPeriod = period['value'];
+                });
+
+                if (period['value'] == 'custom') {
+                  _showCustomPeriodDialog();
+                }
+              },
+              child: Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: isSelected
+                      ? Color(0xFF00B7C4).withOpacity(0.2)
+                      : const Color(0xFF2A2A2A),
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(
+                    color: isSelected ? Colors.transparent : Colors.grey[700]!,
+                    width: 1,
+                  ),
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Row(
+                      children: [
+                        Icon(
+                          period['icon'],
+                          color: isSelected
+                              ? Color(0xFFFDDD48)
+                              : Colors.grey[400],
+                          size: 20,
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Text(
+                            period['name'],
+                            style: Fonts.text.copyWith(
+                              color: isSelected
+                                  ? Color(0xFFFDDD48)
+                                  : Colors.white,
+                              fontSize: 12,
+                              fontWeight: isSelected
+                                  ? FontWeight.w600
+                                  : FontWeight.w500,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                        if (isSelected)
+                          Icon(
+                            Icons.check_circle,
+                            color: Color(0xFFFDDD48),
+                            size: 16,
+                          ),
+                      ],
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      period['description'],
+                      style: Fonts.text.copyWith(
+                        color: Colors.grey[500],
+                        fontSize: 10,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        ),
+      ],
+    );
+  }
+
+  void _showCustomPeriodDialog() {
+    final TextEditingController customPeriodController =
+        TextEditingController();
+
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: const Color(0xFF1D1D1D),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        title: Row(
+          children: [
+            Icon(Icons.edit_calendar, color: AppColors.primaryColor, size: 24),
+            const SizedBox(width: 8),
+            Text(
+              'Custom Duration',
+              style: Fonts.title.copyWith(color: Colors.white, fontSize: 18),
+            ),
+          ],
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            CustomField(
+              controller: customPeriodController,
+              hintText: "Enter weeks (e.g., 20)",
+              labelText: 'Duration in weeks',
+              keyboardType: TextInputType.number,
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              setState(() {
+                _selectedPeriod = null;
+              });
+              Navigator.pop(context);
+            },
+            child: Text(
+              'Cancel',
+              style: Fonts.text.copyWith(color: Colors.grey[400]),
+            ),
+          ),
+          TextButton(
+            onPressed: () {
+              if (customPeriodController.text.trim().isNotEmpty) {
+                setState(() {
+                  _selectedPeriod = customPeriodController.text.trim();
+                });
+                Navigator.pop(context);
+              }
+            },
+            child: Text(
+              'Set Duration',
+              style: Fonts.text.copyWith(color: AppColors.primaryColor),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  bool _isFormValid() {
+    return _nameController.text.trim().isNotEmpty &&
+        (_selectedType != null ||
+            _isCustomType && _customTypeController.text.trim().isNotEmpty) &&
+        _selectedDifficulty != null &&
+        _selectedPeriod != null;
   }
 
   @override
@@ -80,7 +338,6 @@ class _NewProgramScreenState extends State<NewProgramScreen> {
                           controller: _nameController,
                           labelText: 'Program Name',
                           hintText: 'Enter program name...',
-
                           required: true,
                           validator: (value) {
                             if (value == null || value.trim().isEmpty) {
@@ -93,7 +350,12 @@ class _NewProgramScreenState extends State<NewProgramScreen> {
                           },
                         ),
                         const SizedBox(height: 24),
-
+                        BuildImage(
+                          onImageSelected: (File? image) {
+                            setState(() {});
+                          },
+                        ),
+                        const SizedBox(height: 24),
                         // Description
                         CustomField(
                           controller: _descriptionController,
@@ -137,9 +399,10 @@ class _NewProgramScreenState extends State<NewProgramScreen> {
                                 mainAxisSpacing: 12,
                                 childAspectRatio: 3,
                               ),
-                          itemCount: _programTypes.length,
+                          itemCount: _programTypesProvider.programTypes.length,
                           itemBuilder: (context, index) {
-                            final type = _programTypes[index];
+                            final type =
+                                _programTypesProvider.programTypes[index];
                             final isSelected =
                                 _selectedType == type['name'] && !_isCustomType;
 
@@ -154,13 +417,21 @@ class _NewProgramScreenState extends State<NewProgramScreen> {
                               child: Container(
                                 padding: const EdgeInsets.all(12),
                                 decoration: BoxDecoration(
-                                  color: isSelected
-                                      ? type['color'].withOpacity(0.2)
-                                      : const Color(0xFF2A2A2A),
+                                  gradient: isSelected
+                                      ? LinearGradient(
+                                          colors: [
+                                            type['color1'].withOpacity(0.6),
+                                            type['color1'].withOpacity(0.9),
+                                          ],
+                                          begin: Alignment.topLeft,
+                                          end: Alignment.bottomRight,
+                                        )
+                                      : null,
                                   borderRadius: BorderRadius.circular(12),
+
                                   border: Border.all(
                                     color: isSelected
-                                        ? type['color']
+                                        ? Colors.transparent
                                         : Colors.grey[700]!,
                                     width: 1,
                                   ),
@@ -229,7 +500,7 @@ class _NewProgramScreenState extends State<NewProgramScreen> {
                         const SizedBox(height: 20),
 
                         Text(
-                          'Create custom type :',
+                          'Create custom type:',
                           style: Fonts.text.copyWith(
                             color: Colors.grey[400],
                             fontSize: 14,
@@ -239,9 +510,7 @@ class _NewProgramScreenState extends State<NewProgramScreen> {
 
                         CustomField(
                           controller: _customTypeController,
-
                           hintText: 'Enter custom type...',
-
                           maxLength: 20,
                           borderColor: _isCustomType
                               ? AppColors.primaryColor
@@ -258,6 +527,16 @@ class _NewProgramScreenState extends State<NewProgramScreen> {
                         ),
 
                         const SizedBox(height: 32),
+
+                        // Difficulty Level Section
+                        _buildDifficultySection(),
+
+                        const SizedBox(height: 32),
+
+                        // Program Duration Section
+                        _buildPeriodSection(),
+
+                        const SizedBox(height: 32),
                       ],
                     ),
                   ),
@@ -268,20 +547,13 @@ class _NewProgramScreenState extends State<NewProgramScreen> {
                 CustomButton(
                   fontSize: 14,
                   height: 12,
-                  text: 'Continue ',
-                  color: AppColors.primaryColor,
+                  text: 'Continue',
+                  color: _isFormValid()
+                      ? AppColors.primaryColor
+                      : Colors.grey[600]!,
                   icon: Icons.arrow_forward,
-
                   textColor: Colors.black,
-
-                  onPressed: () async {
-                    if (context.mounted) {
-                      await Routes.slideFromRight(
-                        context,
-                        const ProgramDaysScreen(),
-                      );
-                    }
-                  },
+                  onPressed: _isFormValid,
                 ),
               ],
             ),

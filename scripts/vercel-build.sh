@@ -14,5 +14,9 @@ if [[ ! -x "${FLUTTER_HOME}/bin/flutter" ]]; then
   mv "${TEMP_DIR}/flutter" "${FLUTTER_HOME}"
 fi
 
+# Flutter runs Git commands from its SDK checkout; Vercel may extract it with
+# ownership that differs from the build user.
+git config --global --add safe.directory "${FLUTTER_HOME}"
+
 export PATH="${FLUTTER_HOME}/bin:${PATH}"
 flutter build web --release

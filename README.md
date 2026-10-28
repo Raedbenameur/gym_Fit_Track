@@ -106,7 +106,3 @@ web/          Web entry point, icons, and manifest
 Issues and pull requests are welcome. For significant changes, open an issue
 first to discuss the proposed change.
 
-## License
-
-No license has been specified yet. Add a `LICENSE` file before redistributing
-the project or accepting contributions under an open-source license.

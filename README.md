@@ -1,8 +1,8 @@
-# GymTrack
+# GymTrack demo version 
 
 GymTrack is a Flutter workout-tracking app for planning training, following
 fitness goals, and reviewing workout progress. It runs on Android, iOS, and the
-web. On desktop-sized browser windows, the web app appears in a responsive,
+web.  the web app appears in a responsive,
 interactive phone preview; on smaller screens, it fills the viewport.
 
 ## Features
@@ -19,12 +19,8 @@ Some screens currently use sample in-app data. The app does not currently
 provide account-based or cloud synchronization.
 
 ## Screenshots
+<img width="%100" alt="9bb4483a-0a11-4ede-bb55-89b954a77e5d" src="https://github.com/user-attachments/assets/0c8acee0-6c81-4323-87f3-fec1fb428d24" />
 
-Add current app screenshots here when publishing, for example:
-
-```markdown
-![GymTrack home screen](docs/screenshots/home.png)
-```
 
 ## Getting started
 

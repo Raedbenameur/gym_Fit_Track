@@ -46,7 +46,7 @@ class _MyAppState extends State<MyApp> {
               return kIsWeb ? WebPreviewShell(child: app) : app;
             },
             routes: Routes.routes,
-            initialRoute: '/home',
+            initialRoute: '/',
             locale: languageProvider.locale,
             supportedLocales: const [Locale('en'), Locale('fr')],
             localizationsDelegates: const [

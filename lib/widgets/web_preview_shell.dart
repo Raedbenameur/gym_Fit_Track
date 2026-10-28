@@ -32,7 +32,7 @@ class _WebPreviewShellState extends State<WebPreviewShell> {
             return widget.child;
           }
 
-          final panelWidth = math.min(380.0, constraints.maxWidth * 0.34);
+          final panelWidth = math.min(280.0, constraints.maxWidth * 0.34);
           return SizedBox.expand(
             child: Row(
               children: [
@@ -61,10 +61,17 @@ class _WebPreviewShellState extends State<WebPreviewShell> {
             );
           }
 
-          return Center(
-            child: _buildPhonePreview(
-              maxWidth: constraints.maxWidth - 36,
-              maxHeight: constraints.maxHeight - 36,
+          return Scrollbar(
+            child: SingleChildScrollView(
+              key: const Key('web-preview-canvas-scroll'),
+              child: ConstrainedBox(
+                constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                child: Center(
+                  child: _buildPhonePreview(
+                    maxWidth: constraints.maxWidth - 36,
+                  ),
+                ),
+              ),
             ),
           );
         },
@@ -72,19 +79,13 @@ class _WebPreviewShellState extends State<WebPreviewShell> {
     );
   }
 
-  Widget _buildPhonePreview({
-    required double maxWidth,
-    required double maxHeight,
-  }) {
-    const framePadding = 9.0;
+  Widget _buildPhonePreview({required double maxWidth}) {
+    const framePadding = 3.0;
     const portraitDesignSize = Size(372, 826);
     final designSize = _landscape ? const Size(826, 372) : portraitDesignSize;
     final aspectRatio = designSize.width / designSize.height;
     final maxPreviewWidth = _landscape ? 560.0 : 330.0;
-    final width = math.min(
-      maxPreviewWidth,
-      math.min(maxWidth, maxHeight * aspectRatio),
-    );
+    final width = math.min(maxPreviewWidth, maxWidth);
     final height = width / aspectRatio;
     final mediaQuery = MediaQuery.of(context);
     final frameRadius = _landscape ? 42.0 : 48.0;
@@ -92,15 +93,15 @@ class _WebPreviewShellState extends State<WebPreviewShell> {
 
     return SizedBox(
       key: const Key('web-preview-phone'),
-      width: width,
-      height: height,
+      width: width - 10,
+      height: height - 40,
       child: Stack(
         clipBehavior: Clip.none,
         children: [
           if (_frameVisible) ...[
             Positioned(
               left: -3,
-              top: _landscape ? 52 : 135,
+              top: _landscape ? 40 : 135,
               child: _hardwareButton(width: 3, height: _landscape ? 48 : 34),
             ),
             Positioned(

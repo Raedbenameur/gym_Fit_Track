@@ -106,3 +106,7 @@ web/          Web entry point, icons, and manifest
 Issues and pull requests are welcome. For significant changes, open an issue
 first to discuss the proposed change.
 
+## License
+
+This project is licensed under the MIT License. See [LICENSE](LICENSE) for
+details.

@@ -95,7 +95,7 @@ class _BuildImageState extends State<BuildImage> {
                             begin: Alignment.topRight,
                             end: Alignment.center,
                             colors: [
-                              Colors.black.withOpacity(0.8),
+                              Colors.black.withValues(alpha: 0.8),
                               Colors.transparent,
                             ],
                           ),
@@ -114,7 +114,7 @@ class _BuildImageState extends State<BuildImage> {
                               child: Container(
                                 padding: const EdgeInsets.all(8),
                                 decoration: BoxDecoration(
-                                  color: Colors.black.withOpacity(0.7),
+                                  color: Colors.black.withValues(alpha: 0.7),
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                                 child: Icon(
@@ -145,7 +145,7 @@ class _BuildImageState extends State<BuildImage> {
                               child: Container(
                                 padding: const EdgeInsets.all(8),
                                 decoration: BoxDecoration(
-                                  color: Colors.black.withOpacity(0.7),
+                                  color: Colors.black.withValues(alpha: 0.7),
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                                 child: const Icon(
@@ -169,7 +169,7 @@ class _BuildImageState extends State<BuildImage> {
                             vertical: 4,
                           ),
                           decoration: BoxDecoration(
-                            color: Colors.black.withOpacity(0.7),
+                            color: Colors.black.withValues(alpha: 0.7),
                             borderRadius: BorderRadius.circular(6),
                           ),
                           child: Text(

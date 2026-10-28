@@ -34,7 +34,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   borderRadius: BorderRadius.circular(16),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.3),
+                      color: Colors.black.withValues(alpha: 0.3),
                       spreadRadius: 0,
                       blurRadius: 20,
                       offset: const Offset(0, 8),
@@ -105,7 +105,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: isSelected
-              ? AppColors.primaryColor.withOpacity(0.2)
+              ? AppColors.primaryColor.withValues(alpha: 0.2)
               : const Color(0xFF3A3A3A),
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
@@ -154,7 +154,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               borderRadius: BorderRadius.circular(16),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.3),
+                  color: Colors.black.withValues(alpha: 0.3),
                   spreadRadius: 0,
                   blurRadius: 20,
                   offset: const Offset(0, 8),
@@ -467,7 +467,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           width: double.infinity,
                           padding: const EdgeInsets.all(16),
                           decoration: BoxDecoration(
-                            color: AppColors.primaryColor.withOpacity(0.2),
+                            color: AppColors.primaryColor.withValues(
+                              alpha: 0.2,
+                            ),
                             borderRadius: BorderRadius.circular(12),
                             border: Border.all(
                               color: AppColors.primaryColor,
@@ -525,7 +527,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             borderRadius: BorderRadius.circular(16),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.1),
+                color: Colors.black.withValues(alpha: 0.1),
                 spreadRadius: 0,
                 blurRadius: 8,
                 offset: const Offset(0, 4),
@@ -556,7 +558,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             Container(
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
-                color: AppColors.primaryColor.withOpacity(0.2),
+                color: AppColors.primaryColor.withValues(alpha: 0.2),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Icon(icon, color: AppColors.primaryColor, size: 18),

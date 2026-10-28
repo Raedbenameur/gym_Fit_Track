@@ -64,10 +64,10 @@ class _ProgramDayExercisesState extends State<ProgramDayExercisesScreen> {
                                   96,
                                   96,
                                   96,
-                                ).withOpacity(0.4),
+                                ).withValues(alpha: 0.4),
                                 borderRadius: BorderRadius.circular(12),
                                 border: Border.all(
-                                  color: Colors.white.withOpacity(0.1),
+                                  color: Colors.white.withValues(alpha: 0.1),
                                   width: 1,
                                 ),
                               ),
@@ -116,7 +116,7 @@ class _ProgramDayExercisesState extends State<ProgramDayExercisesScreen> {
                           Text(
                             'Build strength and endurance',
                             style: Fonts.text.copyWith(
-                              color: Colors.white.withOpacity(0.8),
+                              color: Colors.white.withValues(alpha: 0.8),
                               fontSize: 14,
                               fontWeight: FontWeight.w400,
                             ),

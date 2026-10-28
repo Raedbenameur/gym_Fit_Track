@@ -198,8 +198,8 @@ class _ProgramDaysScreenState extends State<ProgramDaysScreen> {
                                     255,
                                     225,
                                     92,
-                                  ).withOpacity(0.8),
-                                  const Color(0xFFFDDD48).withOpacity(1),
+                                  ).withValues(alpha: 0.8),
+                                  const Color(0xFFFDDD48).withValues(alpha: 1),
                                 ],
                                 begin: Alignment.topLeft,
                                 end: Alignment.bottomRight,
@@ -267,7 +267,7 @@ class _ProgramDaysScreenState extends State<ProgramDaysScreen> {
                                   30,
                                   255,
                                   146,
-                                ).withOpacity(0.2)
+                                ).withValues(alpha: 0.2)
                               : Colors.grey[800]!,
                           width: 1,
                         ),
@@ -340,7 +340,7 @@ class _ProgramDaysScreenState extends State<ProgramDaysScreen> {
                                           30,
                                           255,
                                           146,
-                                        ).withOpacity(0.2)
+                                        ).withValues(alpha: 0.2)
                                       : Colors.grey[800],
                                   borderRadius: BorderRadius.circular(12),
                                 ),
@@ -423,7 +423,7 @@ class _ProgramDaysScreenState extends State<ProgramDaysScreen> {
                               subtitle: 'When do you usually workout?',
                               onTimeSelected: (String selectedTime) {
                                 setState(() {
-                                  var _selectedWorkoutTime = selectedTime;
+                                  var selectedWorkoutTime = selectedTime;
                                 });
                               },
                             ),
@@ -464,7 +464,7 @@ class _ProgramDaysScreenState extends State<ProgramDaysScreen> {
                                         30,
                                         255,
                                         146,
-                                      ).withOpacity(0.3),
+                                      ).withValues(alpha: 0.3),
                                       width: 1,
                                     ),
                                   ),
@@ -518,7 +518,7 @@ class _ProgramDaysScreenState extends State<ProgramDaysScreen> {
                                             30,
                                             255,
                                             146,
-                                          ).withOpacity(0.2),
+                                          ).withValues(alpha: 0.2),
                                           borderRadius: BorderRadius.circular(
                                             6,
                                           ),

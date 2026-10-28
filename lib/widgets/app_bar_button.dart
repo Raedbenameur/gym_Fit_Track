@@ -22,7 +22,7 @@ class AppBarButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(23),
           boxShadow: [
             BoxShadow(
-              color: AppColors.primaryColor.withOpacity(0.3),
+              color: AppColors.primaryColor.withValues(alpha: 0.3),
               spreadRadius: 0,
               blurRadius: 8,
               offset: const Offset(0, 4),

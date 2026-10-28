@@ -252,7 +252,7 @@ class _AddExerciseState extends State<AddExercise> {
                       ),
                       decoration: BoxDecoration(
                         color: isSelected
-                            ? Colors.orange.withOpacity(0.2)
+                            ? Colors.orange.withValues(alpha: 0.2)
                             : const Color(0xFF2A2A2A),
                         borderRadius: BorderRadius.circular(20),
                         border: Border.all(
@@ -406,7 +406,7 @@ class _AddExerciseState extends State<AddExercise> {
                         color: const Color(0xFF2A2A2A),
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(
-                          color: AppColors.primaryColor.withOpacity(0.3),
+                          color: AppColors.primaryColor.withValues(alpha: 0.3),
                           width: 1,
                         ),
                       ),
@@ -443,7 +443,7 @@ class _AddExerciseState extends State<AddExercise> {
                       color: const Color(0xFF2A2A2A),
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(
-                        color: Colors.orange.withOpacity(0.3),
+                        color: Colors.orange.withValues(alpha: 0.3),
                         width: 1,
                       ),
                     ),
@@ -562,7 +562,7 @@ class _AddExerciseState extends State<AddExercise> {
                               borderRadius: BorderRadius.circular(12),
                               border: Border.all(
                                 color: exercise['isRest'] == true
-                                    ? Colors.orange.withOpacity(0.3)
+                                    ? Colors.orange.withValues(alpha: 0.3)
                                     : const Color(0x38FFFFFF),
                                 width: 1,
                               ),
@@ -627,7 +627,7 @@ class _AddExerciseState extends State<AddExercise> {
           child: Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: Colors.red.withOpacity(0.1),
+              color: Colors.red.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(6),
             ),
             child: const Icon(
@@ -651,7 +651,9 @@ class _AddExerciseState extends State<AddExercise> {
             Container(
               padding: const EdgeInsets.all(6),
               decoration: BoxDecoration(
-                color: _getExerciseColor(exercise['type']).withOpacity(0.2),
+                color: _getExerciseColor(
+                  exercise['type'],
+                ).withValues(alpha: 0.2),
                 borderRadius: BorderRadius.circular(6),
               ),
               child: Icon(
@@ -676,7 +678,7 @@ class _AddExerciseState extends State<AddExercise> {
               child: Container(
                 padding: const EdgeInsets.all(6),
                 decoration: BoxDecoration(
-                  color: Colors.red.withOpacity(0.1),
+                  color: Colors.red.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(6),
                 ),
                 child: const Icon(
@@ -722,9 +724,9 @@ class _AddExerciseState extends State<AddExercise> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: color.withOpacity(0.3), width: 1),
+        border: Border.all(color: color.withValues(alpha: 0.3), width: 1),
       ),
       child: Text(
         text,

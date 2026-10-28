@@ -37,8 +37,8 @@ class _QuickActionState extends State<QuickAction>
 
       _borderColorAnimation =
           ColorTween(
-            begin: AppColors.primaryColor.withOpacity(0.3),
-            end: AppColors.primaryColor.withOpacity(0.8),
+            begin: AppColors.primaryColor.withValues(alpha: 0.3),
+            end: AppColors.primaryColor.withValues(alpha: 0.8),
           ).animate(
             CurvedAnimation(
               parent: _animationController,
@@ -75,7 +75,7 @@ class _QuickActionState extends State<QuickAction>
                     border: Border.all(
                       color:
                           _borderColorAnimation.value ??
-                          AppColors.primaryColor.withOpacity(0.3),
+                          AppColors.primaryColor.withValues(alpha: 0.3),
                       width: 1,
                     ),
                     boxShadow: [
@@ -83,7 +83,7 @@ class _QuickActionState extends State<QuickAction>
                         color:
                             (_borderColorAnimation.value ??
                                     AppColors.primaryColor)
-                                .withOpacity(0.2),
+                                .withValues(alpha: 0.2),
                         spreadRadius: 0,
                         blurRadius: 4,
                         offset: const Offset(0, 2),
@@ -118,7 +118,7 @@ class _QuickActionState extends State<QuickAction>
                 color: const Color(0xFF2A2A2A),
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(
-                  color: AppColors.primaryColor.withOpacity(0.3),
+                  color: AppColors.primaryColor.withValues(alpha: 0.3),
                   width: 1,
                 ),
               ),

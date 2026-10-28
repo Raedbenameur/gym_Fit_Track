@@ -119,7 +119,7 @@ class _TimeSelectorState extends State<TimeSelector> {
                                 254,
                                 229,
                                 88,
-                              ).withOpacity(0.2)
+                              ).withValues(alpha: 0.2)
                             : const Color(0xFF2A2A2A),
                         borderRadius: isSelected
                             ? BorderRadius.circular(20)

@@ -84,7 +84,7 @@ class _CustomButtonState extends State<CustomButton>
                     : null, // Add border support
                 boxShadow: [
                   BoxShadow(
-                    color: widget.color.withOpacity(0.3),
+                    color: widget.color.withValues(alpha: 0.3),
                     spreadRadius: 0,
                     blurRadius: 8,
                     offset: const Offset(0, 4),

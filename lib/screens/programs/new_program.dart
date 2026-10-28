@@ -193,8 +193,8 @@ class _NewProgramScreenState extends State<NewProgramScreen> {
                   gradient: isSelected
                       ? LinearGradient(
                           colors: [
-                            Color(0xFFFDDD48).withOpacity(0.2),
-                            Color(0xFFFDDD48).withOpacity(0.5),
+                            Color(0xFFFDDD48).withValues(alpha: 0.2),
+                            Color(0xFFFDDD48).withValues(alpha: 0.5),
                           ],
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,

@@ -46,7 +46,7 @@ class _WorkoutCalendarState extends State<WorkoutCalendar> {
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.2),
+              color: Colors.black.withValues(alpha: 0.2),
               spreadRadius: 0,
               blurRadius: 10,
               offset: const Offset(0, 4),
@@ -232,10 +232,10 @@ class _WorkoutCalendarState extends State<WorkoutCalendar> {
       borderColor = AppColors.primaryColor;
       textColor = AppColors.primaryColor;
     } else if (isCompleted) {
-      backgroundColor = Colors.green.withOpacity(0.2);
+      backgroundColor = Colors.green.withValues(alpha: 0.2);
       textColor = Colors.white;
     } else if (isMissed) {
-      backgroundColor = Colors.red.withOpacity(0.2);
+      backgroundColor = Colors.red.withValues(alpha: 0.2);
       textColor = Colors.white;
     }
 

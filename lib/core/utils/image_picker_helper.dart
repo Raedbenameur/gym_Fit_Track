@@ -141,7 +141,7 @@ class ImagePickerHelper {
                         color: const Color(0xFF2A2A2A),
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(
-                          color: Colors.yellow.withOpacity(0.3),
+                          color: Colors.yellow.withValues(alpha: 0.3),
                           width: 1,
                         ),
                       ),

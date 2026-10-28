@@ -18,7 +18,7 @@ class WorkoutCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.2),
+            color: Colors.black.withValues(alpha: 0.2),
             spreadRadius: 0,
             blurRadius: 10,
             offset: const Offset(0, 4),
@@ -31,7 +31,7 @@ class WorkoutCard extends StatelessWidget {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [Colors.transparent, Colors.black.withOpacity(0.8)],
+            colors: [Colors.transparent, Colors.black.withValues(alpha: 0.8)],
           ),
         ),
         padding: const EdgeInsets.all(20),
@@ -54,7 +54,7 @@ class WorkoutCard extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(4),
                   decoration: BoxDecoration(
-                    color: AppColors.primaryColor.withOpacity(0.2),
+                    color: AppColors.primaryColor.withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(6),
                   ),
                   child: Icon(
@@ -83,7 +83,7 @@ class WorkoutCard extends StatelessWidget {
                 backgroundColor: AppColors.primaryColor,
                 foregroundColor: Colors.black,
                 elevation: 4,
-                shadowColor: AppColors.primaryColor.withOpacity(0.3),
+                shadowColor: AppColors.primaryColor.withValues(alpha: 0.3),
                 padding: const EdgeInsets.symmetric(
                   horizontal: 24,
                   vertical: 12,
@@ -107,7 +107,7 @@ class WorkoutCard extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.all(2),
                     decoration: BoxDecoration(
-                      color: Colors.black.withOpacity(0.1),
+                      color: Colors.black.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: const Icon(

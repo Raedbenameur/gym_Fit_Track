@@ -511,7 +511,7 @@ class _ProgressScreenState extends State<ProgressScreen>
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                 decoration: BoxDecoration(
-                  color: AppColors.primaryColor.withOpacity(0.2),
+                  color: AppColors.primaryColor.withValues(alpha: 0.2),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Text(
@@ -559,7 +559,7 @@ class _ProgressScreenState extends State<ProgressScreen>
       decoration: BoxDecoration(
         color: const Color(0xFF3A3A3A),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: color.withOpacity(0.3), width: 1),
+        border: Border.all(color: color.withValues(alpha: 0.3), width: 1),
       ),
       child: Column(
         children: [
@@ -597,7 +597,7 @@ class _ProgressScreenState extends State<ProgressScreen>
           Container(
             padding: const EdgeInsets.all(6),
             decoration: BoxDecoration(
-              color: AppColors.primaryColor.withOpacity(0.2),
+              color: AppColors.primaryColor.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(6),
             ),
             child: Icon(

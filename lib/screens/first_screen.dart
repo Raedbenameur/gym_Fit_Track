@@ -45,11 +45,11 @@ class _LanguageState extends State<Language> {
                           43,
                           43,
                           1,
-                        ).withOpacity(0.95),
+                        ).withValues(alpha: 0.95),
                         borderRadius: BorderRadius.circular(24),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withOpacity(0.1),
+                            color: Colors.black.withValues(alpha: 0.1),
                             spreadRadius: 0,
                             blurRadius: 20,
                             offset: const Offset(0, 10),
@@ -61,7 +61,9 @@ class _LanguageState extends State<Language> {
                           Container(
                             padding: const EdgeInsets.all(16),
                             decoration: BoxDecoration(
-                              color: AppColors.primaryColor.withOpacity(0.1),
+                              color: AppColors.primaryColor.withValues(
+                                alpha: 0.1,
+                              ),
                               shape: BoxShape.circle,
                             ),
                             child: Icon(
@@ -99,8 +101,8 @@ class _LanguageState extends State<Language> {
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: AppColors.primaryDark,
                                 elevation: 2,
-                                shadowColor: AppColors.primaryDark.withOpacity(
-                                  0.3,
+                                shadowColor: AppColors.primaryDark.withValues(
+                                  alpha: 0.3,
                                 ),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(16),

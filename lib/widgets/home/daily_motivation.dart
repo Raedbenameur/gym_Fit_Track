@@ -12,13 +12,16 @@ class DailyMotivation extends StatelessWidget {
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [AppColors.primaryColor.withOpacity(0.1), Colors.transparent],
+          colors: [
+            AppColors.primaryColor.withValues(alpha: 0.1),
+            Colors.transparent,
+          ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: AppColors.primaryColor.withOpacity(0.2),
+          color: AppColors.primaryColor.withValues(alpha: 0.2),
           width: 1,
         ),
       ),

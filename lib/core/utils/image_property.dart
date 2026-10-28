@@ -88,7 +88,7 @@ class ImageProperty {
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
                       color: isSelected
-                          ? Color(0xFFFDDD48).withOpacity(0.2)
+                          ? Color(0xFFFDDD48).withValues(alpha: 0.2)
                           : const Color(0xFF2A2A2A),
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(

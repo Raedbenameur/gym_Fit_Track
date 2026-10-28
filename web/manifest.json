@@ -1,11 +1,11 @@
 {
-    "name": "GymTrack - Workout Tracker",
-    "short_name": "GymTrack",
+    "name": "gym",
+    "short_name": "gym",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#080B10",
-    "theme_color": "#080B10",
-    "description": "Track your workouts, build consistency, and reach your fitness goals.",
+    "background_color": "#0175C2",
+    "theme_color": "#0175C2",
+    "description": "A new Flutter project.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

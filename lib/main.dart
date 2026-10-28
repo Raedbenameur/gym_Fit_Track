@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
 import 'package:gym/routes.dart';
 import 'package:gym/providers/language.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/services.dart';
+import 'package:gym/widgets/web_preview_shell.dart';
 
 void main() {
   runApp(const MyApp());
@@ -39,6 +41,10 @@ class _MyAppState extends State<MyApp> {
         builder: (context, languageProvider, child) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
+            builder: (context, child) {
+              final app = child ?? const SizedBox.shrink();
+              return kIsWeb ? WebPreviewShell(child: app) : app;
+            },
             routes: Routes.routes,
             initialRoute: '/home',
             locale: languageProvider.locale,
